@@ -1,0 +1,427 @@
+/* ============================================
+   GLOBAL STYLES & RESET
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling: Sets default font, background and text color */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+  color: #222;
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+
+/* Styling the heading with centered text and padding */
+header {
+  text-align: center;
+  padding: 50px 20px 30px;
+}
+
+header h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+header p {
+  color: #666;
+  font-size: 16px;
+}
+
+/* ============================================
+   GALLERY SECTION - CAROUSEL LAYOUT
+   ============================================ */
+
+/* Gallery container: sets up the carousel dimensions and positioning */
+.gallery {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  height: auto;
+  min-height: 659px;
+  margin: 0 auto 50px;
+}
+
+/* Individual gallery items: positioned absolutely for carousel effect */
+.gallery-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 900px;
+  overflow: visible;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  /* Initially hidden with opacity 0 */
+  opacity: 0;
+  /* Smooth transition when items become visible/hidden */
+  transition: opacity 0.7s ease;
+  /* Set background for blur effect */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Create blurred background pseudo-element behind the image */
+.gallery-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 550px;
+  /* Inherit the background from parent */
+  background: inherit;
+  background-size: cover;
+  background-position: center;
+  /* Apply strong blur filter to create the effect */
+  filter: blur(25px);
+  /* Keep blurred background behind the image only */
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Active class: shows the currently selected gallery item */
+.gallery-item.active {
+  opacity: 1;
+}
+
+/* ============================================
+   IMAGE STYLING WITH BLUR BACKGROUND
+   ============================================ */
+
+/* Image styling: Uses 'contain' to fit image without cropping
+   The blurred background is created by the ::before pseudo-element */
+.gallery-item img {
+  width: 100%;
+  height: 550px;
+  /* 'contain' fits the entire image without cropping */
+  object-fit: contain;
+  display: block;
+  position: relative;
+  /* Z-index ensures image displays above the blurred background */
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   IMAGE INFO SECTION
+   ============================================ */
+
+/* Info section styling: displays title and description below image */
+.image-info {
+  padding: 18px;
+  text-align: center;
+  background-color: #ffffff;
+  /* Ensure info section is above the blur effect */
+  position: relative;
+  z-index: 2;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.image-info h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.image-info p {
+  color: #333333;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ============================================
+   NAVIGATION BUTTONS
+   ============================================ */
+
+/* Base styling for both previous and next buttons */
+.prev,
+.next {
+  position: absolute;
+  /* Vertically center the buttons */
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 45px;
+  height: 45px;
+
+  border: none;
+  border-radius: 50%;
+
+  /* Semi-transparent dark background for visibility */
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+
+  font-size: 25px;
+  cursor: pointer;
+
+  /* Ensure buttons appear above gallery items */
+  z-index: 10;
+}
+
+/* Position the previous button on the left */
+.prev {
+  left: 15px;
+}
+
+/* Position the next button on the right */
+.next {
+  right: 15px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - MEDIA QUERIES
+   ============================================ */
+
+/* Mobile Phones: Extra Small (320px - 480px) */
+@media screen and (max-width: 480px) {
+  /* Header styling for mobile */
+  header {
+    padding: 30px 15px 20px;
+  }
+
+  header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  header p {
+    font-size: 14px;
+  }
+
+  /* Gallery container for mobile */
+  .gallery {
+    width: 95%;
+    max-width: 100%;
+    min-height: 450px;
+    margin: 0 auto 30px;
+  }
+
+  /* Gallery items for mobile */
+  .gallery-item {
+    border-radius: 8px;
+  }
+
+  /* Adjust blur background height for mobile */
+  .gallery-item::before {
+    height: 350px;
+  }
+
+  /* Reduce image height on mobile */
+  .gallery-item img {
+    height: 350px;
+  }
+
+  /* Image info styling for mobile */
+  .image-info {
+    padding: 12px;
+  }
+
+  .image-info h2 {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .image-info p {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  /* Smaller navigation buttons for mobile */
+  .prev,
+  .next {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .prev {
+    left: 10px;
+  }
+
+  .next {
+    right: 10px;
+  }
+}
+
+/* Tablets: Small (481px - 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* Header styling for tablets */
+  header {
+    padding: 40px 20px 25px;
+  }
+
+  header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  header p {
+    font-size: 15px;
+  }
+
+  /* Gallery container for tablets */
+  .gallery {
+    width: 92%;
+    max-width: 750px;
+    min-height: 520px;
+    margin: 0 auto 40px;
+  }
+
+  /* Adjust blur background height for tablets */
+  .gallery-item::before {
+    height: 420px;
+  }
+
+  /* Adjust image height for tablets */
+  .gallery-item img {
+    height: 420px;
+  }
+
+  /* Image info styling for tablets */
+  .image-info {
+    padding: 15px;
+  }
+
+  .image-info h2 {
+    font-size: 18px;
+    margin-bottom: 7px;
+  }
+
+  .image-info p {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  /* Medium navigation buttons for tablets */
+  .prev,
+  .next {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+
+  .prev {
+    left: 12px;
+  }
+
+  .next {
+    right: 12px;
+  }
+}
+
+/* Medium Screens: Landscape tablets & small desktops (769px - 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  /* Gallery container for medium screens */
+  .gallery {
+    width: 92%;
+    max-width: 850px;
+    min-height: 600px;
+    margin: 0 auto 50px;
+  }
+
+  /* Adjust blur background height */
+  .gallery-item::before {
+    height: 480px;
+  }
+
+  /* Adjust image height */
+  .gallery-item img {
+    height: 480px;
+  }
+
+  /* Image info styling */
+  .image-info {
+    padding: 16px;
+  }
+
+  .image-info h2 {
+    font-size: 19px;
+    margin-bottom: 7px;
+  }
+
+  .image-info p {
+    font-size: 13px;
+  }
+
+  /* Navigation buttons for medium screens */
+  .prev,
+  .next {
+    width: 42px;
+    height: 42px;
+    font-size: 24px;
+  }
+}
+
+/* Large Screens: Desktop (1025px and above) */
+@media screen and (min-width: 1025px) {
+  /* Header styling for desktop - already optimized */
+  header {
+    padding: 50px 20px 30px;
+  }
+
+  header h1 {
+    font-size: 40px;
+  }
+
+  header p {
+    font-size: 16px;
+  }
+
+  /* Gallery container stays optimal on desktop */
+  .gallery {
+    width: 90%;
+    max-width: 900px;
+  }
+}
+
+/* Extra Large Screens: Large desktop (1440px and above) */
+@media screen and (min-width: 1440px) {
+  header {
+    padding: 60px 20px 40px;
+  }
+
+  header h1 {
+    font-size: 48px;
+  }
+
+  header p {
+    font-size: 18px;
+  }
+
+  .gallery {
+    width: 85%;
+    max-width: 1000px;
+  }
+}
+
+/* Responsive utilities */
+@media screen and (max-height: 600px) {
+  /* Adjust for devices with small viewport height */
+  header {
+    padding: 20px 15px 15px;
+  }
+
+  header h1 {
+    margin-bottom: 5px;
+  }
+
+  .gallery {
+    margin-bottom: 20px;
+  }
+}
